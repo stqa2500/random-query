@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>檔案室亂數表查詢器</title>
+    <meta
+      name="description"
+      content="依數量查詢逐列排序亂數表的要抽與不要清單。"
+    />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="top-band" aria-labelledby="app-title">
+        <div class="title-stack">
+          <p class="source-kicker">逐列排序_完成.xlsx</p>
+          <h1 id="app-title">檔案室亂數表查詢器</h1>
+          <div class="data-pills" aria-label="資料摘要">
+            <span>數量 4-400</span>
+            <span>397 筆</span>
+            <span>Sheet1</span>
+          </div>
+        </div>
+        <img
+          class="header-visual"
+          src="assets/archive-lookup.png"
+          alt="檔案櫃、號碼表與放大鏡"
+        />
+      </section>
+
+      <section class="workspace" aria-label="亂數表查詢">
+        <form class="query-panel" id="queryForm">
+          <div class="field-head">
+            <label for="quantityInput">數量</label>
+            <output id="currentQuantity" for="quantityInput quantityRange">4</output>
+          </div>
+
+          <div class="number-stepper">
+            <button class="icon-button" type="button" id="prevBtn" aria-label="上一個數量">
+              <i data-lucide="chevron-left" aria-hidden="true"></i>
+            </button>
+            <input
+              id="quantityInput"
+              type="number"
+              min="4"
+              max="400"
+              step="1"
+              inputmode="numeric"
+              value="4"
+              autocomplete="off"
+            />
+            <button class="icon-button" type="button" id="nextBtn" aria-label="下一個數量">
+              <i data-lucide="chevron-right" aria-hidden="true"></i>
+            </button>
+          </div>
+
+          <input
+            class="range-control"
+            id="quantityRange"
+            type="range"
+            min="4"
+            max="400"
+            step="1"
+            value="4"
+            aria-label="數量範圍"
+          />
+          <div class="range-scale" aria-hidden="true">
+            <span>4</span>
+            <span>400</span>
+          </div>
+
+          <div class="quick-picks" aria-label="常用數量">
+            <button type="button" data-quantity="4">4</button>
+            <button type="button" data-quantity="50">50</button>
+            <button type="button" data-quantity="100">100</button>
+            <button type="button" data-quantity="200">200</button>
+            <button type="button" data-quantity="400">400</button>
+          </div>
+
+          <p class="status-line" id="statusLine" role="status" aria-live="polite"></p>
+        </form>
+
+        <section class="summary-panel" aria-label="查詢摘要">
+          <div>
+            <p class="metric-label">目前數量</p>
+            <p class="metric-value" id="summaryQuantity">4</p>
+          </div>
+          <div>
+            <p class="metric-label">要抽</p>
+            <p class="metric-value draw-text" id="drawCount">0</p>
+          </div>
+          <div>
+            <p class="metric-label">不要</p>
+            <p class="metric-value skip-text" id="skipCount">0</p>
+          </div>
+          <div>
+            <p class="metric-label">原表提示</p>
+            <p class="metric-note" id="sourceNote">資料載入中</p>
+          </div>
+        </section>
+      </section>
+
+      <section class="result-grid" aria-label="查詢結果">
+        <article class="result-block draw-block">
+          <div class="block-head">
+            <div>
+              <p class="block-label">要抽</p>
+              <h2 id="drawTitle">數量 4</h2>
+            </div>
+            <button class="copy-button" type="button" data-copy="draw">
+              <i data-lucide="copy" aria-hidden="true"></i>
+              <span>複製</span>
+            </button>
+          </div>
+          <div class="list-output draw-list" id="drawList" aria-live="polite"></div>
+        </article>
+
+        <article class="result-block skip-block">
+          <div class="block-head">
+            <div>
+              <p class="block-label">不要</p>
+              <h2 id="skipTitle">數量 4</h2>
+            </div>
+            <button class="copy-button" type="button" data-copy="skip">
+              <i data-lucide="copy" aria-hidden="true"></i>
+              <span>複製</span>
+            </button>
+          </div>
+          <div class="list-output skip-list" id="skipList" aria-live="polite"></div>
+        </article>
+      </section>
+
+      <section class="nearby-panel" aria-labelledby="nearbyTitle">
+        <div class="panel-head">
+          <h2 id="nearbyTitle">附近數量</h2>
+          <button class="copy-button" type="button" id="copyLinkBtn">
+            <i data-lucide="link" aria-hidden="true"></i>
+            <span>複製連結</span>
+          </button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">數量</th>
+                <th scope="col">要抽</th>
+                <th scope="col">不要</th>
+              </tr>
+            </thead>
+            <tbody id="nearbyRows"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script src="data.js"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
+    <script src="script.js" defer></script>
+  </body>
+</html>
