@@ -177,6 +177,22 @@ function setQuantity(rawValue, options = {}) {
   renderRecord(record, message);
 }
 
+function previewTypedQuantity(rawValue) {
+  const requested = normalizeQuantity(rawValue);
+  if (requested === null) {
+    elements.status.textContent = `請輸入 ${minQuantity} 到 ${maxQuantity} 的整數`;
+    return;
+  }
+
+  if (requested < minQuantity) {
+    elements.output.value = rawValue;
+    elements.status.textContent = `可輸入 ${minQuantity} 到 ${maxQuantity}，輸入完成後會自動查詢`;
+    return;
+  }
+
+  setQuantity(requested);
+}
+
 function syncUrl(quantity) {
   const url = new URL(window.location.href);
   url.searchParams.set("q", quantity);
@@ -234,7 +250,7 @@ function init() {
   });
 
   elements.input.addEventListener("input", () => {
-    setQuantity(elements.input.value);
+    previewTypedQuantity(elements.input.value);
   });
 
   elements.input.addEventListener("blur", () => {
